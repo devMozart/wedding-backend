@@ -17,6 +17,8 @@ const Guest = mongoose.model('Guest', {
   primaryGuest: { type: String, required: true },
   secondaryGuest: { type: String },
   information: { type: String },
+  email: { type: String },
+  telephone: { type: String },
   date: { type: Date },
 });
 
@@ -46,7 +48,8 @@ app.get('/guests', async (req, res) => {
 });
 
 app.post('/guests', async (req, res) => {
-  const { primaryGuest, secondaryGuest, information } = req.body;
+  const { primaryGuest, secondaryGuest, information, email, telephone } =
+    req.body;
 
   if (!primaryGuest || primaryGuest.length === 0) {
     res.status(400).json({
@@ -62,6 +65,8 @@ app.post('/guests', async (req, res) => {
       primaryGuest,
       secondaryGuest,
       information,
+      email,
+      telephone,
       date: new Date(),
     });
 
