@@ -15,6 +15,7 @@ mongoose.Promise = Promise;
 
 const Guest = mongoose.model('Guest', {
   primaryGuest: { type: String, required: true },
+  isAttending: { type: Boolean, required: true },
   secondaryGuest: { type: String },
   information: { type: String },
   email: { type: String },
@@ -48,8 +49,14 @@ app.get('/guests', async (req, res) => {
 });
 
 app.post('/guests', async (req, res) => {
-  const { primaryGuest, secondaryGuest, information, email, telephone } =
-    req.body;
+  const {
+    primaryGuest,
+    secondaryGuest,
+    information,
+    email,
+    telephone,
+    isAttending,
+  } = req.body;
 
   if (!primaryGuest || primaryGuest.length === 0) {
     res.status(400).json({
@@ -63,6 +70,7 @@ app.post('/guests', async (req, res) => {
   try {
     const newGuest = new Guest({
       primaryGuest,
+      isAttending,
       secondaryGuest,
       information,
       email,
